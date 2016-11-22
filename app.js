@@ -12,6 +12,8 @@ var express = require('express')
 var bodyParser     =        require("body-parser");
 var cmd 	=        require("node-cmd");
 
+var tools = require("./tools/tools.js");
+
 var app = express();
 
 // all environments
@@ -39,21 +41,24 @@ app.get('/users', user.list);
 app.post('/',function(req,res){
 	  var email=req.body.email;
 	  var password=req.body.password;
-	  var account=req.body.account;
+	  var method=req.body.method;
 	  var scheme=req.body.scheme;
 	  var options=req.body.options;
-	  //cmd.run("node iv-nickname.js -m ptc  -u "+email+" -p "+password+" -f 40");
-	  
+	  var fave=null;
+	  var reset=null;
+	  var display=null;
+
+	  tools.nickname(method, email, password, fave, display, reset, scheme);
 	  var output;
 
-	  cmd.get(
+	  /*cmd.get(
 			  'node iv-nickname.js -m '+account+' -u '+email+' -p '+password+' -s '+scheme,
 		        function(data){
 				  output = data;
 		          console.log('Command executed: \n\n',data);
 		        }
 		    );
-	  console.log("Email = "+email+", password is "+password+", account type is: "+account+", scheme: "+scheme+", options: "+options);
+	  console.log("Email = "+email+", password is "+password+", account type is: "+account+", scheme: "+scheme+", options: "+options);*/
 	  //console variable don't forget to put it somewhere cool
 	  res.end('done');
 	});

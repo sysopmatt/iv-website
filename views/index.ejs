@@ -13,11 +13,11 @@
         $("#submit").click(function(){
           email=$("#email").val();
           pass=$("#password").val();
-          account=$("#account").val();
+          method=$("#method").val();
           scheme=$("#scheme").val();
           options=$("#options").val();
           
-          $.post("http://localhost:3000/",{email: email,password: pass,account: account,scheme: scheme,options: options}, function(data){
+          $.post("http://localhost:3000/",{email: email,password: pass,method: method,scheme: scheme,options: options}, function(data){
             if(data==='done')
               {
                 alert("Running now");
@@ -36,13 +36,13 @@
 	<fieldset>
 	
 	<!-- Form Name -->
-	<legend align="center">Account Info</legend>
+	<legend>Account Info</legend>
 	
 	<!-- Text input-->
 	<div class="form-group">
 	  <label class="col-md-4 control-label" for="textinput" >Username</label>  
 	  <div class="col-md-4">
-	  <input id="email" name="email" type="email" placeholder="username" class="form-control input-md" autocorrect="off"> 
+	  <input id="email" name="email" type="user" placeholder="username" class="form-control input-md" autocorrect="off"> 
 	  </div>
 	</div>
 	
@@ -59,11 +59,11 @@
 	  <label class="col-md-4 control-label" for="radios">Account Type</label>
 	  <div class="col-md-4"> 
 	    <label class="radio-inline" for="google">
-	      <input type="radio" name="account" id="google" value="google" checked="checked">
+	      <input type="radio" name="method" id="google" value="google" checked="checked">
 	      Google
 	    </label> 
 	    <label class="radio-inline" for="ptc">
-	      <input type="radio" name="account" id="ptc" value="ptc">
+	      <input type="radio" name="method" id="ptc" value="ptc">
 	      PTC
 	    </label> 
 	  </div>
@@ -108,6 +108,10 @@
 	
 	</fieldset>
 	</form>
+  
+  
+  	<legend>Usage</legend>
+  	  <p>This is how to use it</p>
   
   </body>
 </html>
