@@ -9,9 +9,12 @@
 This application is to name your Pokemon in Pokemon Go with their Individual Values (IVs).
 
 
-## Developing
+## Roadmap
 
-
+1. Fix up HTML/CSS for mobile viewing
+2. Show output from what's named to user
+3. Make submit go back to index.ejs but with an alert
+4. Handle erroneous inputs
 
 ### Tools
 
