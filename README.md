@@ -1,11 +1,12 @@
 
 
-# TestWebApp
+# IV Nicknamer
 
 
 
 ## Usage
 
+This application is to name your Pokemon in Pokemon Go with their Individual Values (IVs).
 
 
 ## Developing
