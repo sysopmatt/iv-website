@@ -6,26 +6,7 @@
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
     
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  </script>
-    <script>
-      $(document).ready(function(){
-        var user,pass;
-        $("#submit").click(function(){
-          email=$("#email").val();
-          pass=$("#password").val();
-          method=$("#method").val();
-          scheme=$("#scheme").val();
-          options=$("#options").val();
-          
-          $.post("http://localhost:3000/",{email: email,password: pass,method: method,scheme: scheme,options: options}, function(data){
-            if(data==='done')
-              {
-                alert("Running now");
-              }
-          });
-        });
-      });
-    </script>
+
     
     
   </head>

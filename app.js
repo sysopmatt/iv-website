@@ -48,18 +48,9 @@ app.post('/',function(req,res){
 	  var reset=null;
 	  var display=null;
 
+	  //var output = tools.nickname(method, email, password, fave, display, reset, scheme);
 	  tools.nickname(method, email, password, fave, display, reset, scheme);
-	  var output;
-
-	  /*cmd.get(
-			  'node iv-nickname.js -m '+account+' -u '+email+' -p '+password+' -s '+scheme,
-		        function(data){
-				  output = data;
-		          console.log('Command executed: \n\n',data);
-		        }
-		    );
-	  console.log("Email = "+email+", password is "+password+", account type is: "+account+", scheme: "+scheme+", options: "+options);*/
-	  //console variable don't forget to put it somewhere cool
+	  //res.end(output);
 	  res.end('done');
 	});
 

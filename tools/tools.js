@@ -7,6 +7,8 @@ module.exports = {
 
 	nickname: function (method, user, pass, fave, display, reset, scheme) {
 		
+		//var output;
+		//var i = 0;
 		
 		const { PTCLogin, GoogleLogin, Client, Utils: { splitInventory, getIVsFromPokemon } } = require('pogobuf');
 		
@@ -29,14 +31,15 @@ module.exports = {
 		}
 		
 		const client = new Client();
-		const provider = method === 'google' ? new GoogleLogin() : new PTCLogin();
+		
+		const provider = (method === 'google') ? new GoogleLogin() : new PTCLogin();
 		
 		if (!user || !pass) {
-		  return "failed";
+		    //return "failed";
+			console.log('failed');
 		}
 		else {
 			console.log("before");
-		}
 		  const promise = provider.login(user, pass)
 		    .then(token => {
 		      client.setAuthInfo(method, token);
@@ -113,6 +116,8 @@ module.exports = {
 			        if (poke.nickname !== nickname) {
 			          client.nicknamePokemon(poke.uuid, nickname);
 			          console.log('Found a cp'+poke.cp+' '+poke.name+', named it: '+nickname);
+			          //output[i] = 'Found a cp'+poke.cp+' '+poke.name+', named it: '+nickname;
+			          //i++;
 			        }
 			
 			        if (!reset && fave !== 0 && poke.iv >= fave && !poke.fave) {
@@ -125,9 +130,12 @@ module.exports = {
 		    })
 		    .then(() => {
 		      console.log('Nicknames changed successfully!');
+		      //try putting output here!!!
 		    });
 		  }
 		
 		  promise.catch(console.error);
+		  //return output;
 		}	
-	};
+	}
+};
