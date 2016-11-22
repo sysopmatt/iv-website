@@ -39,7 +39,7 @@ module.exports = {
 			console.log('failed');
 		}
 		else {
-			console.log("before");
+			
 		  const promise = provider.login(user, pass)
 		    .then(token => {
 		      client.setAuthInfo(method, token);
@@ -52,7 +52,7 @@ module.exports = {
 		      if (!inventory.success) {
 		        throw new Error('Inventory could not be retrieved.');
 		      }
-		      console.log("after");
+		      
 		      const { pokemon } = splitInventory(inventory);
 		      
 		      const pokemonDetails = pokemon

@@ -2,18 +2,36 @@
 <html>
   <head>
     <title><%= title %></title>
+    
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
-    
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script>
+      $(function () {
 
-    
-    
+        $('form').on('submit', function (e) {
+
+          e.preventDefault();
+
+          $.ajax({
+            type: 'post',
+            url: '/',
+            data: $('form').serialize(),
+            success: function () {
+              alert('form was submitted');
+            }
+          });
+
+        });
+
+      });
+    </script>
+
   </head>
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
-	<form class="form-horizontal" method="post">
+	<form class="form-horizontal">
 	<fieldset>
 	
 	<!-- Form Name -->
