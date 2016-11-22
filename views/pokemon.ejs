@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  </script>
+    <script>
+      $(document).ready(function(){
+        var user,pass;
+        $("#submit").click(function(){
+          email=$("#email").val();
+          pass=$("#password").val();
+          account=$("#account").val();
+          scheme=$("#scheme").val();
+          options=$("#options").val();
+          
+          $.post("http://localhost:3000/",{email: email,password: pass,account: account,scheme: scheme,options: options}, function(data){
+            if(data==='done')
+              {
+                alert("Running now");
+              }
+          });
+        });
+      });
+    </script>
+    
+    
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+	<form class="form-horizontal" method="post">
+	<fieldset>
+	
+	<!-- Form Name -->
+	<legend align="center">Account Info</legend>
+	
+	<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="textinput">Username</label>  
+	  <div class="col-md-4">
+	  <input id="email" name="email" type="text" placeholder="username" class="form-control input-md"> 
+	  </div>
+	</div>
+	
+	<!-- Password input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="password">Password</label>
+	  <div class="col-md-4">
+	    <input id="password" name="password" type="password" placeholder="password" class="form-control input-md">
+	  </div>
+	</div>
+	
+	<!-- Multiple Radios (inline) -->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="radios">Account Type</label>
+	  <div class="col-md-4"> 
+	    <label class="radio-inline" for="google">
+	      <input type="radio" name="account" id="google" value="google" checked="checked">
+	      Google
+	    </label> 
+	    <label class="radio-inline" for="ptc">
+	      <input type="radio" name="account" id="ptc" value="ptc">
+	      PTC
+	    </label> 
+	  </div>
+	</div>
+	
+	<!-- Multiple Radios (inline) -->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="radios">Naming scheme</label>
+	  <div class="col-md-4"> 
+	    <label class="radio-inline" for="percentage">
+	      <input type="radio" name="scheme" id="percentage" value="percentage" checked="checked">
+	      ## Pokemon (as percentage)
+	    </label> 
+	    <br>
+	    <label class="radio-inline" for="raw">
+	      <input type="radio" name="scheme" id="raw" value="raw">
+	      ##:##.##.## (Total:Stamina.Attack.Defense as raw numbers)
+	    </label> 
+	  </div>
+	</div>
+	
+	<!-- Multiple Checkboxes -->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="checkboxes">Options</label>
+	  <div class="col-md-4">
+	  <div class="checkbox">
+	    <label for="commas">
+	      <input type="checkbox" name="options" id="commas" value="commas">
+	      Rename commas?
+	    </label>
+		</div>
+      </div>
+	</div>
+	
+	<!-- Button -->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="submit"></label>
+	  <div class="col-md-4">
+	    <button id="submit" name="submit" class="btn btn-primary">Submit</button>
+	  </div>
+	</div>
+	
+	</fieldset>
+	</form>
+  
+  </body>
+</html>
