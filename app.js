@@ -38,6 +38,7 @@ if ('development' === app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 
+
 app.post('/',function(req,res){
 	  var email=req.body.email;
 	  var password=req.body.password;

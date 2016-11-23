@@ -16,6 +16,7 @@ This application is to name your Pokemon in Pokemon Go with their Individual Val
 3. ~~Make submit go back to index.ejs but with an alert~~
 4. Handle erroneous inputs
 5. Protect POST from responding to other sites
+6. Add in comma reset functionality
 
 ### Tools
 
