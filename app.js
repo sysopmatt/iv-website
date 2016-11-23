@@ -13,8 +13,11 @@ var bodyParser     =        require("body-parser");
 var cmd 	=        require("node-cmd");
 
 var tools = require("./tools/tools.js");
+var helmet = require('helmet');
 
 var app = express();
+
+app.use(helmet());
 
 // all environments
 app.set('port', process.env.PORT || 3000);
