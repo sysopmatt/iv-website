@@ -64,16 +64,16 @@ module.exports = {
 		          const move_1 = MOVES[poke.move_1];
 		          const move_2 = MOVES[poke.move_2];
 		          var ivsTotal;
-		          
+		          //console.log(details.name);
 		          return {
 		            number: poke.pokemon_id,
 		            name: details.name,
 		            nickname: poke.nickname,
 		            cp: poke.cp,
-		            moves: [
-		              { name: move_1.name, dps: move_1.dps },
-		              { name: move_2.name, dps: move_2.dps, charge: move_2.charge }
-		            ],
+//		            moves: [
+//		              { name: move_1.name, dps: move_1.dps },
+//		              { name: move_2.name, dps: move_2.dps, charge: move_2.charge }
+//		            ],
 		            iv: {
 		              total: ivsTotal = ivs.stam + ivs.att + ivs.def,
 		              percentage: truncateDecimals(((ivs.stam + ivs.att + ivs.def) / 45) * 100,0),
