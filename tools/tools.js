@@ -5,10 +5,12 @@ module.exports = {
 		
 
 
-	nickname: function (method, user, pass, fave, display, reset, scheme) {
+	nickname: function (method, user, pass, fave, display, reset_commas, scheme) {
 		
 		//var output;
 		//var i = 0;
+		
+		var reset = null;
 		
 		const { PTCLogin, GoogleLogin, Client, Utils: { splitInventory, getIVsFromPokemon } } = require('pogobuf');
 		
@@ -36,7 +38,6 @@ module.exports = {
 		
 		if (!user || !pass) {
 		    //return "failed";
-			console.log('failed');
 		}
 		else {
 			
@@ -97,10 +98,15 @@ module.exports = {
 		  } else {
 		    promise.then(pokemon => {
 		      client.batchStart();
+		      var renamePokemon = true;
+		      
 		      
 		      pokemon.forEach(poke => {
 		    	
-		    	if (!poke.nickname.includes(',')) {
+		    	if(poke.nickname.includes(',')) { renamePokemon = false;}
+		    	if(reset_commas === "yes") {renamePokemon = true;}
+		    	
+		    	if (renamePokemon) {
 		    		const pokemonNameTrunc = poke.name.substring(0,8);
 			    	var IVnickname = null;
 			    	
@@ -123,7 +129,9 @@ module.exports = {
 			        if (!reset && fave !== 0 && poke.iv >= fave && !poke.fave) {
 			          client.setFavoritePokemon(poke.uuid, true);
 			        }
+			        renamePokemon = true;
 		    	}
+		    	
 		      });
 		
 		      return client.batchCall();
