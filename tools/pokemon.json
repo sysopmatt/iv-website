@@ -1659,5 +1659,54 @@
     "weight": "4.0 kg",
     "candy": "None",
     "egg": "Not in Eggs"
+  },
+  {
+    "id":"172",
+    "num":"172",
+    "name":"Pichu",
+    "img":"http://www.serebii.net/pokemongo/pokemon/172.png"
+  },
+  {
+    "id":"173",
+    "num":"173",
+    "name":"Cleffa",
+    "img":"http://www.serebii.net/pokemongo/pokemon/173.png"
+  },
+  {
+    "id":"174",
+    "num":"174",
+    "name":"Igglybuff",
+    "img":"http://www.serebii.net/pokemongo/pokemon/174.png"
+  },
+  {
+    "id":"175",
+    "num":"175",
+    "name":"Togepi",
+    "img":"http://www.serebii.net/pokemongo/pokemon/175.png"
+  },
+  {
+    "id":"176",
+    "num":"176",
+    "name":"Togetic",
+    "img":"http://www.serebii.net/pokemongo/pokemon/176.png"
+  },
+  {
+    "id":"238",
+    "num":"238",
+    "name":"Smoochum",
+    "img":"http://www.serebii.net/pokemongo/pokemon/238.png"
+  },
+  {
+    "id":"239",
+    "num":"239",
+    "name":"Elekid",
+    "img":"http://www.serebii.net/pokemongo/pokemon/239.png"
+  },
+  {
+    "id":"240",
+    "num":"240",
+    "name":"Magby",
+    "img":"http://www.serebii.net/pokemongo/pokemon/240.png"
   }
+  
 ]

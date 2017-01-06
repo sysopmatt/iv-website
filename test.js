@@ -50,6 +50,8 @@ login.login('mattpadams@gmail.com', 'fireplace111')
     const pokebox = inv.pokemon;
 
     for(var i = 0; i < pokebox.length; i++) {
+    	
+
 
     	for (var ii = 0; ii < POKEDETAILS.length; ii++) {
     		
@@ -67,19 +69,26 @@ login.login('mattpadams@gmail.com', 'fireplace111')
     	}
     	
     }
-    
 	console.log('Array created!');
 	
-	pokebox.forEach(pokemon => {
+	//pogobuf.client.batchStart();
+	
+	pokebox.forEach(function(pokemon) {
 		
-		const pokemonNameTrunc = pokemon.name.substring(0,8);
-    	var nick = pad2(pokemon.individual_percentage) + ' ' + pokemonNameTrunc;
-		pogobuf.client.nicknamePokemon(pokemon.id, nick);
-		
+		//exclude eggs
+		if (!pokemon.is_egg) {
+			
+			
+			var pokemonNameTrunc = pokemon.name.substring(0,8);
+	    	var nick = pad2(pokemon.individual_percentage) + ' ' + pokemonNameTrunc;
+			pogobuf.client.nicknamePokemon(pokemon.id, nick);
+	    	console.log(pokemon.id, nick);
+
+		}
 	});
 	
 	console.log('Done!');
 	
-    return pogobuf.client.batchCall();
+    return true; //pogobuf.client.batchCall();
 })
 .catch(console.error);
