@@ -24,10 +24,15 @@ function truncateDecimals (number, digits) {
     return truncatedNum / multiplier;
 }
 
+function pad2 (num) {
+	  return (num < 10 ? '0' : '') + num;
+}
+
+
 login.login('mattpadams@gmail.com', 'fireplace111')
 .then(token => {
     client.setAuthInfo('google', token);
-    client.setPosition(lat, lng);
+    //client.setPosition(lat, lng);
     return client.init();
 }).then(() => {
     // Make some API calls!
@@ -42,23 +47,39 @@ login.login('mattpadams@gmail.com', 'fireplace111')
     const POKEDETAILS = require('./tools/pokemon.json');
     const POKEMOVES = require('./tools/moves.json');
 
-    //console.log(inv);
-    
-    //console.log('Starting loop:');
-    //console.log(inv.pokemon.length);
+    const pokebox = inv.pokemon;
 
-    for(var i = 0; i < inv.pokemon.length; i++) {
-    	var pokemon = inv.pokemon[i];
+    for(var i = 0; i < pokebox.length; i++) {
 
-    	for (var ii = 0; ii < POKEDETAILS.name; ii++) {
-    		if (inv.pokemon[i].pokemon_id == POKEDETAILS.id) {
-    			inv.pokemon[i].name = POKEDETAILS.name;
-    			console.log(POKEDETAILS.name);
+    	for (var ii = 0; ii < POKEDETAILS.length; ii++) {
+    		
+    		
+    		//add pokemon's name to inventory
+    		if (pokebox[i].pokemon_id == POKEDETAILS[ii].id) {
+    			pokebox[i].name = POKEDETAILS[ii].name;
     		}
+    		
+    		//calculate IV percentage
+    		
+    		pokebox[i].individual_percentage = truncateDecimals(((pokebox[i].individual_stamina + pokebox[i].individual_attack + pokebox[i].individual_defense) / 45) * 100,0);
+    		
+    		
     	}
     	
-    	console.log('Pokemon:', pokemon);
     }
+    
+	console.log('Array created!');
+	
+	pokebox.forEach(pokemon => {
+		
+		const pokemonNameTrunc = pokemon.name.substring(0,8);
+    	var nick = pad2(pokemon.individual_percentage) + ' ' + pokemonNameTrunc;
+		pogobuf.client.nicknamePokemon(pokemon.id, nick);
+		
+	});
+	
 	console.log('Done!');
+	
+    return pogobuf.client.batchCall();
 })
 .catch(console.error);
