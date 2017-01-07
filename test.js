@@ -78,11 +78,18 @@ login.login('mattpadams@gmail.com', 'fireplace111')
 		//exclude eggs
 		if (!pokemon.is_egg) {
 			
-			
+			//create Pokemon nickname
 			var pokemonNameTrunc = pokemon.name.substring(0,8);
 	    	var nick = pad2(pokemon.individual_percentage) + ' ' + pokemonNameTrunc;
-			pogobuf.client.nicknamePokemon(pokemon.id, nick);
-	    	console.log(pokemon.id, nick);
+	    	
+			console.log(pokemon.id,nick);
+	    	//rename!
+	    	new Promise((resolve) => {
+	    		
+	    		resolve(pogobuf.client.nicknamePokemon(pokemon.id, nick));
+	    	}).catch(err => {console.error('Failed to rename Pokemon', nick, 'ERROR: ', err);});
+	    	
+	    	
 
 		}
 	});

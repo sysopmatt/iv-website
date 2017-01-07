@@ -68,7 +68,7 @@ module.exports = {
 		          //console.log(details.name);
 		          return {
 		            number: poke.pokemon_id,
-		            name: details.name,
+		            name: details ? details.name : 'Unknown - new pokemon',
 		            nickname: poke.nickname,
 		            cp: poke.cp,
 //		            moves: [
