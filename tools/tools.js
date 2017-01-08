@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-
+const pogobuf = require('pogobuf');
 
 module.exports = {
 		
@@ -7,21 +7,12 @@ module.exports = {
 		
 		nickname: function (method, user, pass, fave, display, reset_commas, scheme) {
 			
-			// var output;
-			// var i = 0;
 			
 			var reset = null;
 			
 			const { PTCLogin, GoogleLogin, Client, Utils: { splitInventory, getIVsFromPokemon } } = require('pogobuf');
 			
 			const POKEMON = require('./pokemon.json');
-//			var y = 0;
-//			for(var i = 0; i < POKEMON.length; i++) {
-//			if (POKEMON[y].id > 100) {
-//			console.log(POKEMON[y]);
-//			}
-//			y++;
-//			}
 			
 			const { PROVIDER, PG_USER, PG_PASS } = process.env;
 			
@@ -53,98 +44,95 @@ module.exports = {
 					return client.getInventory(0);
 				}).then(function (inventory) {
 					
-					if (!inventory.success) {
-						throw new Error('Inventory could not be retrieved.');
-					}
 					
-					const { pokemon } = splitInventory(inventory);
+					// Use the returned data
+					if (!inventory.success) throw Error('success=false in inventory response');
 					
+					// Split inventory into individual arrays and log them on the console
+					const inv = pogobuf.Utils.splitInventory(inventory);
 					
-					var pokemonDetails = pokemon.filter(function (poke) {
-						return poke.pokemon_id;
-					}).map(function (poke) {
-						
-						const ivs = getIVsFromPokemon(poke);
-						const details = POKEMON[poke.pokemon_id - 1];
-						var ivsTotal;
-						// console.log(details.name);
-						return {
-							number: poke.pokemon_id,
-							name: details ? details.name : 'Unknown - new pokemon',
-									nickname: poke.nickname,
-									cp: poke.cp,
-									iv: {
-										total: ivsTotal = ivs.stam + ivs.att + ivs.def,
-										percentage: truncateDecimals(((ivs.stam + ivs.att + ivs.def) / 45) * 100,0),
-										stamina: ivs.stam,
-										attack: ivs.att,
-										defense: ivs.def
-									},
-									fave: poke.favorite,
-									uuid: poke.id
-						};
-						
-					});
+					const POKEDETAILS = require('./pokemon.json');
 					
-					return pokemonDetails.sort(function (a, b) {
-						return a.number - b.number;
-					});
-				});
-				
-				
-				
-				if (display) {
-					promise.then(function (pokemon) {
-						console.log(JSON.stringify(pokemon, null, 2));
-					});
-				} else {
-					promise.then(function (pokemon) {
-						client.batchStart();
-						var renamePokemon = true;
+					const pokebox = inv.pokemon;
+					
+					for(var i = 0; i < pokebox.length; i++) {
 						
 						
-						pokemon.forEach(function (poke) {
-							if(poke.nickname.includes(',')) { renamePokemon = false;}
-							if(reset_commas === "yes") {renamePokemon = true;}
-
-							if (renamePokemon) {
-								const pokemonNameTrunc = poke.name.substring(0,8);
-								var IVnickname = null;
-
-								
-								if (scheme === 'percentage') {
-									IVnickname = pad2(poke.iv.percentage) + ' ' + pokemonNameTrunc;
-								} else if (scheme === 'raw') {
-									IVnickname = pad2(poke.iv.total) + ':' + pad2(poke.iv.stamina) + '.' + pad2(poke.iv.attack) + '.' + pad2(poke.iv.defense);
-								}
-								
-								const nickname = reset ? '' : IVnickname;
-								
-								if (poke.nickname !== nickname) {
-									//client.nicknamePokemon(poke.uuid, nickname);
-									console.log('Found a cp'+poke.cp+' '+poke.name+', named it: '+nickname);
-									
-									// output[i] = 'Found a cp'+poke.cp+' '+poke.name+',
-									// named it: '+nickname;
-									// i++;
-								}
-								
-								if (!reset && fave !== 0 && poke.iv >= fave && !poke.fave) {
-									client.setFavoritePokemon(poke.uuid, true);
-								}
-								renamePokemon = true;
+						
+						for (var ii = 0; ii < POKEDETAILS.length; ii++) {
+							
+							
+							//add pokemon's name to inventory
+							if (pokebox[i].pokemon_id == POKEDETAILS[ii].id) {
+								pokebox[i].name = POKEDETAILS[ii].name;
 							}
 							
-						});
+							//calculate IV percentage
+							
+							pokebox[i].individual_percentage = truncateDecimals(((pokebox[i].individual_stamina + pokebox[i].individual_attack + pokebox[i].individual_defense) / 45) * 100,0);
+							pokebox[i].individual_total = pokebox[i].individual_attack + pokebox[i].individual_defense + pokebox[i].individual_stamina;
+							
+						}
 						
-						return client.batchCall();
-					}).then(function () {
-						console.log('Nicknames changed successfully!');
+						
+					}
+					console.log('Array created!');
+					
+					return pokebox.sort(function (a, b) {
+						return a.number - b.number;	
+						
 					});
-				}
+				}).then(function (pokebox) {
+					
+					//start batch statement
+					client.batchStart();
+					
+					
+					
+					//run through each pokemon in the pokebox
+					pokebox.forEach(function(pokemon) {
+						
+						//exclude eggs
+						if (!pokemon.is_egg) {
+							
+							
+							
+							//determine if this iteration should be renamed
+							var renamePokemon = true;
+							if(pokemon.nickname.includes(',')) { renamePokemon = false;}
+							if(reset_commas === "yes") {renamePokemon = true;}
+							
+							if (renamePokemon) {
+								
+								//determine naming scheme
+								var nick = null;
+								
+								if (scheme === 'percentage') {
+									
+									nick = pad2(pokemon.individual_percentage) + ' ' + pokemon.name.substring(0,8);
+								} else if (scheme === 'raw') {
+									
+									nick = pad2(pokemon.individual_total) + ':' + pad2(pokemon.individual_stamina) + '.' + pad2(pokemon.individual_attack) + '.' + pad2(pokemon.individual_defense);
+								}
+								
+								
+								//rename Pokemon that haven't already been nicknamed
+								if (pokemon.nickname !== nick) {
+									console.log('Found a '+ pokemon.name +' with CP of '+ pokemon.cp +'.  Renamed to: '+ nick);
+									client.nicknamePokemon(pokemon.id, nick);
+								}
+								
+							}
+							
+						}
+					});
+					
+					console.log('Done!');
+					
+					return client.batchCall();
+					
+				}).catch(console.error);
 				
-				promise.catch(console.error);
-//				return output;
 			}
 		}
 };

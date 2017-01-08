@@ -3,17 +3,18 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , http = require('http')
-  , path = require('path');
+var express = require('express'), 
+  routes = require('./routes'), 
+  user = require('./routes/user'),
+  http = require('http'),
+  path = require('path');
 
 var bodyParser     =        require("body-parser");
 var cmd 	=        require("node-cmd");
 
 var tools = require("./tools/tools.js");
 var helmet = require('helmet');
+var pogobuf = require('pogobuf');
 
 var app = express();
 
