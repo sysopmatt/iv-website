@@ -1,17 +1,14 @@
-
-
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	padding: 50px;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+	color: #00B7FF;
 }
 
 p {
 	text-align: center;
-	
 }
 
 h1 {
@@ -22,21 +19,22 @@ legend {
 	text-align: center;
 }
 
-
-
-input { 
-    text-transform: lowercase;
+input {
+	text-transform: lowercase;
 }
+
 ::-webkit-input-placeholder { /* WebKit browsers */
-    text-transform: none;
-}
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    text-transform: none;
-}
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-    text-transform: none;
-}
-:-ms-input-placeholder { /* Internet Explorer 10+ */
-    text-transform: none;
+	text-transform: none;
 }
 
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	text-transform: none;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	text-transform: none;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+	text-transform: none;
+}
