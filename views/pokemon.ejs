@@ -1,48 +1,41 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
-    
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  </script>
-    <script>
-      $(document).ready(function(){
-        var user,pass;
-        $("#submit").click(function(){
-          email=$("#email").val();
-          pass=$("#password").val();
-          account=$("#account").val();
-          scheme=$("#scheme").val();
-          options=$("#options").val();
-          
-          $.post("http://localhost:3000/",{email: email,password: pass,account: account,scheme: scheme,options: options}, function(data){
-            if(data==='done')
-              {
-                alert("Running now");
-              }
+<% layout('layout') -%>
+
+<script>
+      $(function () {
+
+
+        $('form').on('submit', function (e) {
+
+          e.preventDefault();
+
+          $.ajax({
+            type: 'post',
+            url: '/',
+            data: $('form').serialize(),
+            success: function (response) {
+              $('.body-main').html(response);
+            }
+            
           });
+
         });
+
       });
-    </script>
-    
-    
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-	<form class="form-horizontal" method="post">
-	<fieldset>
-	
+</script>
+
+<div class="body-main">
+        
+
+	<form class="form-horizontal">
+
 	<!-- Form Name -->
-	<legend align="center">Account Info</legend>
+	<legend>Account Info</legend>
 	
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="textinput">Username</label>  
+	  <label class="col-md-4 control-label" for="textinput" >Username</label>  
 	  <div class="col-md-4">
-	  <input id="email" name="email" type="text" placeholder="username" class="form-control input-md"> 
+	  <input id="email" name="email" type="text" placeholder="username" class="form-control input-md" autocorrect="off"> 
 	  </div>
 	</div>
 	
@@ -59,11 +52,11 @@
 	  <label class="col-md-4 control-label" for="radios">Account Type</label>
 	  <div class="col-md-4"> 
 	    <label class="radio-inline" for="google">
-	      <input type="radio" name="account" id="google" value="google" checked="checked">
+	      <input type="radio" name="method" id="google" value="google" checked="checked">
 	      Google
 	    </label> 
 	    <label class="radio-inline" for="ptc">
-	      <input type="radio" name="account" id="ptc" value="ptc">
+	      <input type="radio" name="method" id="ptc" value="ptc">
 	      PTC
 	    </label> 
 	  </div>
@@ -75,24 +68,24 @@
 	  <div class="col-md-4"> 
 	    <label class="radio-inline" for="percentage">
 	      <input type="radio" name="scheme" id="percentage" value="percentage" checked="checked">
-	      ## Pokemon (as percentage)
-	    </label> 
+	      IV percentage with Pokemon type <a href="#" data-toggle="popover" title="Click image to close" data-html="true" data-trigger="hover" data-placement="bottom" data-content="<img src='/images/percentage.small.png' width='200' />">(info)</a>
+	    </label>
 	    <br>
 	    <label class="radio-inline" for="raw">
 	      <input type="radio" name="scheme" id="raw" value="raw">
-	      ##:##.##.## (Total:Stamina.Attack.Defense as raw numbers)
+	      Raw IV's (Total:Stamina.Attack.Defense) <a href="#" data-toggle="popover" title="Click image to close" data-html="true" data-trigger="hover" data-placement="bottom" data-content="<img src='/images/raw.small.png' width='200' />">(info)</a>
 	    </label> 
 	  </div>
 	</div>
 	
 	<!-- Multiple Checkboxes -->
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="checkboxes">Options</label>
+	  <label class="col-md-4 control-label" for="checkboxes">Additional options</label>
 	  <div class="col-md-4">
 	  <div class="checkbox">
 	    <label for="commas">
-	      <input type="checkbox" name="options" id="commas" value="commas">
-	      Rename commas?
+	      <input type="checkbox" name="reset_commas" id="reset_commas" value="yes">
+	      Reset commas 
 	    </label>
 		</div>
       </div>
@@ -109,5 +102,20 @@
 	</fieldset>
 	</form>
   
-  </body>
-</html>
+
+
+  	<legend>Usage explained</legend>
+  	  <p><strong>Naming scheme:</strong> The naming scheme has two options.  
+  	    <br><strong>(1)</strong> The first option calculates the IV percentage and puts that before with the species name (to allow sorting by IV percentage).  The species name may be truncated and have characters removed from the end due to a limited character limit. 
+  	    <br><strong>(2)</strong> The second option shows you the raw IV's of the Pokemon.  The first number is the sum of the following three (displayed in this order): Stamina, Attack, and Defense.</p> 
+  	  <p><strong>Additional options:</strong><br> By default, anything with a comma in its name will remain untouched.  You may over-ride this by using the 'reset comma' option.</p>
+
+  
+    
+    <script>
+	$(document).ready(function(){
+	    $('[data-toggle="popover"]').popover();
+	});
+	</script>
+	
+</div>

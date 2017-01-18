@@ -6,6 +6,7 @@
 var express = require('express'), 
   routes = require('./routes'), 
   user = require('./routes/user'),
+  pokemon = require('./routes/pokemon'),
   http = require('http'),
   path = require('path');
 
@@ -15,6 +16,7 @@ var cmd 	=        require("node-cmd");
 var tools = require("./tools/tools.js");
 var helmet = require('helmet');
 var pogobuf = require('pogobuf');
+var engine = require('ejs-locals');
 
 var app = express();
 
@@ -23,6 +25,7 @@ app.use(helmet());
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
+app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -40,6 +43,7 @@ if ('development' === app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.get('/pokemon', pokemon.main);
 //app.get('/users', user.list);
 
 
@@ -52,12 +56,10 @@ app.post('/',function(req,res){
 	  var fave=null;
 	  var reset_commas=req.body.reset_commas;
 	  var display=null;
-
 	  
-	  //var output = tools.nickname(method, email, password, fave, display, reset, scheme);
-	  tools.nickname(method, email, password, fave, display, reset_commas, scheme);
-	  //res.end(output);
-	  res.end('done');
+	  var output = tools.nickname(method, email, password, fave, display, reset_commas, scheme);
+	  
+	  res.end(output);
 	});
 
 http.createServer(app).listen(app.get('port'), function(){

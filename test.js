@@ -8,6 +8,8 @@
     splitInventory() function.
  */
 const pogobuf = require('pogobuf');
+var fs = require("fs");
+
 
 const lat = 44.0664517,
 lng = -123.1029851;
@@ -43,6 +45,7 @@ login.login('mattpadams@gmail.com', 'fireplace111')
 	
 	// Split inventory into individual arrays and log them on the console
 	const inv = pogobuf.Utils.splitInventory(inventory);
+	fs.writeFile("export.json", JSON.stringify( inv, null, "\t" ), "utf8", null);
 	
 	const POKEDETAILS = require('./tools/pokemon.json');
 	
