@@ -53,11 +53,9 @@ app.post('/',function(req,res){
 	  var method=req.body.method;
 	  var scheme=req.body.scheme;
 	  var options=req.body.options;
-	  var fave=null;
 	  var reset_commas=req.body.reset_commas;
-	  var display=null;
 	  
-	  var output = tools.nickname(method, email, password, fave, display, reset_commas, scheme);
+	  var output = tools.nickname(method, email, password, reset_commas, scheme);
 	  
 	  res.end(output);
 	});
